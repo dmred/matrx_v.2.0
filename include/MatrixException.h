@@ -1,6 +1,4 @@
-#pragma once
-#ifndef MATRE_H
-#define NATRE_H
+
 
 class MatrixException {
 private:
