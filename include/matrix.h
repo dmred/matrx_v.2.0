@@ -1,51 +1,91 @@
 #pragma once
-#ifndef MATR_H
-#define NATR_H
-#include "MatrixException.h"
+#ifndef matrix_h
+#define matrix_h
 #include <iostream>
-#include <cstring> 
+#include "matrixexception.h"
+using namespace std;
 
 template <typename T>
 class Matrix;
 
-template <class T>
-std::ostream & operator<<(std::ostream & output, const Matrix<T> &);
-
-template <class T>
-std::istream & operator>>(std::istream & input, Matrix<T> &);
-
-
 template <typename T>
-class Matrix {
-private:
-	void swap(Matrix & x);
-	T **matrix;
-	int columns;
-	int rows;
-
+std::ostream &operator << (std::ostream &out, const Matrix<T> &temp);/*
+{
+	for (int i = 0; i < temp.n; i++)
+	{
+		for (int j = 0; j < temp.m; j++)
+		{
+			out << temp.matrix[i][j] << " ";
+		}
+		out << endl;
+	}
+	return out;
+}*/
+template <typename T>
+std::istream &operator >> (std::istream &input, Matrix<T> &matr);/*
+{
+    for (int i = 0; i < matr.n; i++) 
+    {
+        for (int j = 0; j < matr.m; j++) 
+        {
+            if (!(input >> matr.matrix[i][j]))
+            {
+                throw "Error matrix fill";
+            }
+        }
+    }
+    return input;
+}*/
+template <typename T>
+class Matrix
+{
 public:
-	Matrix() : rows(0), columns(0), matrix(nullptr) {};	// Done
-	Matrix(unsigned int n, unsigned int m);					// Done
-	Matrix(T **matr, unsigned int _n, unsigned int _m);
-	Matrix(Matrix const & x);
-	~Matrix();
-
-	unsigned int rowsNumber() const;							// Done
-	unsigned int columnsNumber() const;							// Done
-	bool readFromFile(char *path);								// Done
-	Matrix &operator =(const Matrix& m2);
-	Matrix operator +(const Matrix& m2);						// Done
-	Matrix operator -(const Matrix& m2);						// Done
-	Matrix operator *(double num);								// Done
-	Matrix operator *(const Matrix& m2);						// Done
-	bool operator ==(const Matrix& m2);						// Done
-	T* operator [](unsigned int index);							// Done
-
-	friend std::ostream & operator<< <>(std::ostream & output, const Matrix & matrix);	// Done
-	friend std::istream & operator>> <>(std::istream & input, Matrix<T> & matrix);		// Done
+	Matrix<T>() :n(0), m(0), matrix(nullptr) {};
+	Matrix(unsigned int rows, unsigned int columns);
+	Matrix(const Matrix &copy);
+	~Matrix<T>();
+	Matrix operator + (const Matrix&);
+	Matrix operator - (const Matrix&);
+	Matrix operator * (const Matrix&);
+	Matrix &operator = (const Matrix&);
+	bool operator == (const Matrix&);
+	T* operator [] (unsigned int);
+	unsigned int Rows() const;
+	unsigned int Columns() const;
+	friend std::ostream &operator << <>(std::ostream &out, const Matrix<T> &temp);
+	friend std::istream &operator >> <>(std::istream &input, Matrix<T> &matr);
+private:
+	T **matrix;
+	unsigned int n;	// ñòðîê
+	unsigned int m;	// ñòîëáöîâ
+};/*
+template <typename T>
+std::ostream &operator << (std::ostream &out, const Matrix<T> &temp)
+{
+	for (int i = 0; i < temp.n; i++)
+	{
+		for (int j = 0; j < temp.m; j++)
+		{
+			out << temp.matrix[i][j] << " ";
+		}
+		out << endl;
+	}
+	return out;
 };
-
-
-#include "Matrix.cpp"
-
+template <typename T>
+std::istream &operator >> (std::istream &input, Matrix<T> &matr)
+{
+    for (int i = 0; i < matr.n; i++) 
+    {
+        for (int j = 0; j < matr.m; j++) 
+        {
+            if (!(input >> matr.matrix[i][j]))
+            {
+                throw "Error matrix fill";
+            }
+        }
+    }
+    return input;
+};*/
+#include "matrix.cpp"
 #endif
