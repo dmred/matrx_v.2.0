@@ -1,10 +1,13 @@
 #include "matrix.h"
-#include "MatrixException.h"  
-#include <string> 
-#include <iostream>   
-#include <fstream>  
+#include "MatrixException.h"
+#include <string>
+#include <iostream>
+#include <fstream> 
 using namespace std;   
- 
+
+#ifndef MATR_CPP
+#define MATR_CPP
+
 template <typename T>
 Matrix<T>::Matrix(unsigned int _rows, unsigned int _columns) : matrix(new T *[_rows]), rows(_rows), columns(_columns) {
 	for (int i = 0; i < rows; i++) {
@@ -34,6 +37,7 @@ Matrix<T>::Matrix(T **matr, unsigned int _rows, unsigned int _columns) : matrix(
 		}
 	}
 }
+
 template <typename T>
 bool Matrix<T>::readFromFile(char* path) {
 	ifstream stream;
@@ -83,7 +87,7 @@ unsigned int Matrix<T>::columnsNumber() const {
 template <typename T>
 Matrix<T> & Matrix<T>::operator =(const Matrix<T>& m2) {
 	if (this != &m2) {
-		(Matrix(m2)).swap(*this);
+		(CMatrix(m2)).swap(*this);
 	}
 	return *this;
 }
@@ -217,14 +221,17 @@ template <typename T>
 std::istream & operator >>(std::istream & input, Matrix<T> & matrix) {
 	for (int i = 0; i < matrix.rows; ++i) {
 		for (int j = 0; j < matrix.columns; ++j) {
-		
+			try {
 				if (!(input >> matrix.matrix[i][j])) {
 					throw initException();
 				}
-			
-			
+			}
+			catch (...) {
+				throw initException();
+			}
 		}
 	}
 
 	return input;
 }
+#endif
