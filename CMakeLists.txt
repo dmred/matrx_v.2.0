@@ -14,10 +14,10 @@ set(SOURCES ${PROJECT_SOURCE_DIR}/include/matrix.cpp)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-include_directories(${PROJECT_SOURCE_DIR}/test)
+include_directories(${PROJECT_SOURCE_DIR}/tests)
 
 add_library (${PROJECT} STATIC ${HEADERS} ${SOURCES})
 
 if (TESTS_FOR_${PROJECT})
-  add_subdirectory(test)
+  add_subdirectory(tests)
 endif ()
