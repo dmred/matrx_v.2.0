@@ -1,2 +1,1 @@
-# Matrix
-[![Build Status](https://travis-ci.org/oVokick/Matrix_templated.svg?branch=master)](https://travis-ci.org/oVokick/Matrix_templated)
+[![Build Status](https://travis-ci.org/dmred/matrx_v.2.0.svg?branch=master)](https://travis-ci.org/dmred/matrx_v.2.0)
