@@ -13,7 +13,7 @@ file(GLOB ${PROJECT_NAME}_sources "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 find_package(${TESTS_FOR_PROJECT})
 include_directories(${${TESTS_FOR_PROJECT}_INCLUDE_DIRS}})
 
-include(FindCPM.cmake)
+include(cmake/FindCPM.cmake)
 CPM_AddModule("cpm-catch"
   GIT_REPOSITORY "https://github.com/designerror/cpm-catch")
 include_directories(${CPM_INCLUDE_DIRS})
