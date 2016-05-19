@@ -1,43 +1,50 @@
-#ifndef Matrix_h
-#define Matrix_h
-
+#pragma once
+#ifndef MATR_H
+#define NATR_H
+#include "MatrixException.h"
 #include <iostream>
-#include <stdlib.h>
-#include <fstream>
-using namespace std;
+#include <cstring> 
 
-class Isclucheniya {
-public:
-	int FileNotOpen();
-	int Razmery();
-	int WrongIndex();
-	int Samoprisvaivanie();
+template <typename T>
+class Matrix;
+
+template <class T>
+std::ostream & operator<<(std::ostream & output, const Matrix<T> &);
+
+template <class T>
+std::istream & operator>>(std::istream & input, Matrix<T> &);
+
+
+template <typename T>
+class Matrix {
 private:
-	int err;	
-};
+	void swap(Matrix & x);
+	T **matrix;
+	int columns;
+	int rows;
 
-class Matrix{
-	
 public:
-	Matrix();
-	Matrix(int _n, int _m);
-	Matrix(const Matrix &M);
+	Matrix() : rows(0), columns(0), matrix(nullptr) {};	// Done
+	Matrix(unsigned int n, unsigned int m);					// Done
+	Matrix(T **matr, unsigned int _n, unsigned int _m);
+	Matrix(Matrix const & x);
 	~Matrix();
-	void set_matrix(char* a) const;
-	void print() const;
-	Matrix operator +(const Matrix &M2) const;
-	Matrix operator *(const Matrix &M2) const;
-	int* operator [] (int k) const;
-	int getnumstr() const;
-	int getnumcol() const;
-	Matrix& operator = (const Matrix &M);
-	bool operator ==(const Matrix &M2) const;
 
-private:
-	int n;
-	int m;
-	int **p;
+	unsigned int rowsNumber() const;							// Done
+	unsigned int columnsNumber() const;							// Done
+	bool readFromFile(char *path);								// Done
+	Matrix &operator =(const Matrix& m2);
+	Matrix operator +(const Matrix& m2);						// Done
+	Matrix operator -(const Matrix& m2);						// Done
+	Matrix operator *(double num);								// Done
+	Matrix operator *(const Matrix& m2);						// Done
+	bool operator ==(const Matrix& m2);						// Done
+	T* operator [](unsigned int index);							// Done
 
+	friend std::ostream & operator<< <>(std::ostream & output, const Matrix & matrix);	// Done
+	friend std::istream & operator>> <>(std::istream & input, Matrix<T> & matrix);		// Done
 };
 
-#endif
+
+#include "Matrix.cpp"
+
