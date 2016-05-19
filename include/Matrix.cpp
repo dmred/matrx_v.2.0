@@ -5,6 +5,9 @@
 #include <fstream>  
 using namespace std;   
  
+#ifndef MATR_CPP
+#define MATR_CPP
+
 template <typename T>
 Matrix<T>::Matrix(unsigned int _rows, unsigned int _columns) : matrix(new T *[_rows]), rows(_rows), columns(_columns) {
 	for (int i = 0; i < rows; i++) {
