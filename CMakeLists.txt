@@ -1,30 +1,22 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(TESTS_FOR_PROJECT matrx_v.2.0)
-
-project(Tests)
+set(PROJECT matrx_v.2.0
+project (${PROJECT})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
+option(TESTS_FOR_${PROJECT} "Include tests for project" ON)
 
-file(GLOB ${PROJECT_NAME}_sources "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+set(HEADERS ${PROJECT_SOURCE_DIR}/include/matrix.h)
+set(SOURCES ${PROJECT_SOURCE_DIR}/include/matrix.cpp)
 
-find_package(${TESTS_FOR_PROJECT})
-include_directories(${${TESTS_FOR_PROJECT}_INCLUDE_DIRS}})
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-include(tests/cmake/FindCPM.cmake)
-CPM_AddModule("cpm-catch"
-  GIT_REPOSITORY "https://github.com/designerror/cpm-catch")
-include_directories(${CPM_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/test)
 
-add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_sources} ${${PROJECT_NAME}_headers})
+add_library (${PROJECT} STATIC ${HEADERS} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} ${TESTS_FOR_PROJECT})
-
-
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_CURRENT_SOURCE_DIR}/fixtures $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${PROJECT_NAME} -s -r compact WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+if (TESTS_FOR_${PROJECT})
+  add_subdirectory(test)
+endif ()
