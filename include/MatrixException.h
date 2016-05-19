@@ -1,4 +1,6 @@
-
+#pragma once
+#ifndef MATRE_H
+#define NATRE_H
 
 class MatrixException {
 private:
@@ -39,3 +41,4 @@ public:
 	emptyException() : MatrixException("Empty matrix") {};
 	char* what() { return "Empty matrix"; };
 };
+#endif
